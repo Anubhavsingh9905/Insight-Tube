@@ -18,7 +18,7 @@ const generate = async(prompt) => {
     //console.log(response.text());
     return response.text();
   } catch (error) {
-    //console.log("response error", error);
+    console.log("response error", error);
   }
 };
 
@@ -63,7 +63,7 @@ module.exports.generateSummary = async(req, res) => {
         res.status(200).send(sumarized)
     }
     catch (error) {
-        //console.log(error);
+        console.log(error);
         res.status(500).json({ message: "some thing went wrong" });
     }
 }
@@ -110,7 +110,7 @@ module.exports.generateQuiz = async(req, res) => {
         res.status(200).json(cleanQuizData);
     }
     catch (error) {
-        //console.log(error);
+        console.log(error);
         res.status(500).json({ message: "some thing went wrong" });
     }
 }
