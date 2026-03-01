@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const cors = require('cors');
+const dotenv = require('dotenv');
 const passport = require('passport');
 const session = require('express-session');
 const {MongoStore }= require('connect-mongo');
@@ -15,16 +16,15 @@ const aiSummaryQuizRouter = require("./Routes/aiSummaryQuiz");
 
 const app = express();
 
-require('dotenv').config();
+dotenv.config();
 
 app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
 main().then(() => {
-    //console.log("DB connected");
-    //console.log(MongoStore);
+    console.log("DB connected");
 }).catch((err) => {
-    //console.log(err);
+    console.log(err);
 })
 
 async function main() {
@@ -94,5 +94,5 @@ app.use("/ai", aiSummaryQuizRouter)
 
 const port = 8080;
 app.listen(port, () => {
-    //console.log(`app is listening at port : ${port} `);
+    console.log(`app is listening at port : ${port} `);
 });
