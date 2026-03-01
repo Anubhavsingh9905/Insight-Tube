@@ -48,7 +48,7 @@ function VideoPlayer() {
     try {
       setShowSum(!showSum);
       if (!showSum) {
-        const res = await api.post(`/ai/transcript`, { url });
+        const res = await api.post(`/ai/transcript`, { url, id });
         setSummary(res.data);
         //console.log(res.data);
         setSumLoad(false);
@@ -65,7 +65,7 @@ function VideoPlayer() {
     try {
       setShowQues(!showQues);
       if (!showQues) {
-        const res = await api.post(`/ai/quiz`, { url });
+        const res = await api.post(`/ai/quiz`, { url, id });
         setQuiz(res.data);
         //console.log(res.data);
         setQuizLoad(false);

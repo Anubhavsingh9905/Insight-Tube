@@ -24,13 +24,13 @@ const generate = async(prompt) => {
 
 module.exports.generateSummary = async(req, res) => {
     try {
-        const { url , lang} = req.body;
+        const { url, vid} = req.body;
         //console.log(url);
         
         let sumarized = await Summary.findOne({url: url});
         //console.log(`${sumarized.summary}`);
         if(!sumarized){
-            const xx = await YoutubeTranscript.fetchTranscript(url);
+            const xx = await YoutubeTranscript.fetchTranscript(vid);
             
             if(!xx){
                 res.status(500).json({ message: "No transcript" });
@@ -70,13 +70,13 @@ module.exports.generateSummary = async(req, res) => {
 
 module.exports.generateQuiz = async(req, res) => {
     try {
-        const {url} = req.body;
+        const {url, vid} = req.body;
         //console.log(url);
         
         let quizData = await Quiz.findOne({url: url});
         //console.log(`${sumarized.summary}`);
         if(!quizData){
-            const xx = await YoutubeTranscript.fetchTranscript(url);
+            const xx = await YoutubeTranscript.fetchTranscript(vid);
     
             let transcript = "";
             xx.map(function myfunc(x) {
