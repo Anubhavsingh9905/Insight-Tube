@@ -43,13 +43,17 @@ const seesionOption = {
     store,
     secret: process.env.SESSION_SECERET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: true,         
+        sameSite: "none"
     }
 };
 
+app.set("trust proxy", 1);
 app.use(cookieParser());
 app.use(session(seesionOption));
 app.use(passport.initialize());
@@ -92,7 +96,7 @@ app.use("/notes", notesRouter);
 
 app.use("/ai", aiSummaryQuizRouter)
 
-const port = 8080;
+const port = process.env.PORT||8080;
 app.listen(port, () => {
     console.log(`app is listening at port : ${port} `);
 });

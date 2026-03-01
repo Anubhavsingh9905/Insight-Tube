@@ -25,6 +25,7 @@ function Dashboard() {
     const [folders, setFolder] = useState([]);
     const [popUp, setPopup] = useState(false);
     const [submit, setSubmit] = useState(false);
+    const [error, setError] = useState();
     const [query, setQuery] = useState("");
     const navigate = useNavigate();
 
