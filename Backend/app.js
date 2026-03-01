@@ -15,8 +15,9 @@ const aiSummaryQuizRouter = require("./Routes/aiSummaryQuiz");
 
 const app = express();
 
+require('dotenv').config();
 
-app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
 main().then(() => {
@@ -27,20 +28,20 @@ main().then(() => {
 })
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/youtubeLearning');
+    await mongoose.connect(process.env.MONGO_URL);
 }
 
 const store = MongoStore.create({
-    mongoUrl: 'mongodb://127.0.0.1:27017/youtubeLearning',
+    mongoUrl: process.env.MONGO_URL,
     crypto: {
-        secret: "processenvSCERET",
+        secret: process.env.SESSION_SECERET,
     },
     touchAfter: 24 * 3600,
 });
 
 const seesionOption = {
     store,
-    secret: 'Youtube-Learning-Organiser',
+    secret: process.env.SESSION_SECERET,
     resave: false,
     saveUninitialized: true,
     cookie: {
