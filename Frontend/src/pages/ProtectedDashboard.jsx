@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthProvider";
-import { useNavigate, Navigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
 
 
@@ -9,7 +9,8 @@ function ProtectedDashboard() {
     const navigate = useNavigate();
 
     if(!isLoggedIn){
-        return <Navigate to="/login" replace />
+        console.log("nakao");
+        navigate("/register");
     }
 
     return(

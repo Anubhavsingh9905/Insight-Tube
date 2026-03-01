@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import api from "../service/api.js";
 
-function AddFolder({ onClose }) {
+function AddFolder({ onClose, setFolder, folders}) {
     const [Foldername, setFolderName] = useState("");
 
     const handleChange = (e) => {
@@ -11,15 +11,15 @@ function AddFolder({ onClose }) {
 
     const handleSubmit = async (e) => {
         try {
-            // e.preventDefault();
+            e.preventDefault();
             const response = await api.post("/folder", 
                 { name: Foldername }, 
                 {withCredentials: true}
             )
 
-            //console.log(response.data)
+            console.log(response.data);
+            setFolder(prev => [...prev, response.data]);
             setFolderName("");
-
         } catch (error) {
             console.error(error);
             setError(`${error} ___failed to add folder`)

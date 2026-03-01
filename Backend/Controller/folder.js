@@ -26,7 +26,7 @@ module.exports.saveFolder =  async (req, res) => {
         const folder = new Folder({ name: name , order: count, author: userId});
         await folder.save();
 
-        res.json("successfully added");
+        res.json(folder);
     }
     catch (err) {
         console.error(err);

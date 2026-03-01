@@ -143,7 +143,7 @@ function Dashboard() {
                 </div>
             }
 
-            {popUp && <AddFolder onClose={() => { handlePopUp() }} />}
+            {popUp && <AddFolder onClose={() => { handlePopUp() }} setFolder={setFolder} folders={folders}/>}
         </div>
     )
 }
