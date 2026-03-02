@@ -25,6 +25,7 @@ async function fetchTranscriptFromAPI(url) {
         return response.data.transcription;
     } catch (error) {
         console.error(error);
+        return null;
     }
 }
 
@@ -55,6 +56,9 @@ module.exports.generateSummary = async (req, res) => {
         if (!sumarized) {
             const transcript = await fetchTranscriptFromAPI(url);
 
+            if(!transcript){
+                res.status(200).json({message: "Transcript error"});
+            }
             // if (!xx) {
             //     res.status(500).json({ message: "No transcript" });
             //     return;
