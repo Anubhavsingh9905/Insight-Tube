@@ -2,6 +2,7 @@
   "dependencies": {
     "@danielxceron/youtube-transcript": "^1.2.6",
     "@google/generative-ai": "^0.24.1",
+    "axios": "^1.13.6",
     "body-parser": "^2.2.1",
     "connect-mongo": "^6.0.0",
     "cookie-parser": "^1.4.7",
