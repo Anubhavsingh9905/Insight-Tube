@@ -10,7 +10,7 @@ async function fetchTranscriptFromAPI(url) {
         method: 'POST',
         url: 'https://youtube-transcripts-transcribe-youtube-video-to-text.p.rapidapi.com/transcribe',
         headers: {
-            'x-rapidapi-key': 'bfa5b1f0dbmsh8fcad809cbacf88p19bd4fjsna001da8a143b',
+            'x-rapidapi-key': process.env.RAPID_API_KEY,
             'x-rapidapi-host': 'youtube-transcripts-transcribe-youtube-video-to-text.p.rapidapi.com',
             'Content-Type': 'application/json'
         },
