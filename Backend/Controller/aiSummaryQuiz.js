@@ -57,7 +57,8 @@ module.exports.generateSummary = async (req, res) => {
             const transcript = await fetchTranscriptFromAPI(url);
 
             if(!transcript){
-                res.status(200).json({message: "Transcript error"});
+                res.status(403).json({message: "Transcript error"});
+                return;
             }
             // if (!xx) {
             //     res.status(500).json({ message: "No transcript" });
