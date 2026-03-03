@@ -1,33 +1,9 @@
 const Summary = require("../models/summary");
 const Quiz = require('../models/quiz');
+const { fetchTranscript } = require('youtube-transcript-plus');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const axios = require('axios');
 
 require('dotenv').config();
-
-async function fetchTranscriptFromAPI(url) {
-    const options = {
-        method: 'POST',
-        url: 'https://youtube-transcripts-transcribe-youtube-video-to-text.p.rapidapi.com/transcribe',
-        headers: {
-            'x-rapidapi-key': process.env.RAPID_API_KEY,
-            'x-rapidapi-host': 'youtube-transcripts-transcribe-youtube-video-to-text.p.rapidapi.com',
-            'Content-Type': 'application/json'
-        },
-        data: {
-            url: 'https://www.youtube.com/watch?v=N7ZmPYaXoic'
-        }
-    };
-
-    try {
-        const response = await axios.request(options);
-        // console.log(response.data.transcription);
-        return response.data.transcription;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
 
 const gemini_api_key = process.env.API_KEY;
 const googleAI = new GoogleGenerativeAI(gemini_api_key);
@@ -48,35 +24,32 @@ const generate = async (prompt) => {
 
 module.exports.generateSummary = async (req, res) => {
     try {
-        const {url} = req.body;
+        const {url, vid} = req.body;
         //console.log(url);
-
+        const videoId = vid;
         let sumarized = await Summary.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!sumarized) {
-            const transcript = await fetchTranscriptFromAPI(url);
+            const transcriptData = await fetchTranscript(videoId);
 
-            if(!transcript){
+            if(!transcriptData || transcriptData.length == 0){
                 res.status(403).json({message: "Transcript error"});
                 return;
             }
-            // if (!xx) {
-            //     res.status(500).json({ message: "No transcript" });
-            //     return;
-            // }
+            
 
-            // let transcript = "";
-            // xx.map(function myfunc(x) {
-            //     transcript += x.text;
-            //     transcript += " ";
-            // });
-            //console.log(transcript);
+            let transcript = "";
+            transcriptData.map(function myfunc(x) {
+                transcript += x.text;
+                transcript += " ";
+            });
+            // console.log(transcript);
 
             const prompt = `summarize this "${transcript}" in bullet points in 350 words or in smaller words if text size is small`;
             sumarized = await generate(prompt);
 
             if (!sumarized) {
-                res.status(500).json({ message: "No summary" });
+                res.status(500).json({ message: "Too many request, exceed daily limit" });
                 return;
             }
             const newSummary = new Summary({
@@ -87,30 +60,33 @@ module.exports.generateSummary = async (req, res) => {
             newSummary.save();
         }
         else sumarized = sumarized.summary;
-        //console.log(`transcript ${transcript}`);
+
+        // console.log(`transcript ${transcript}`);
         res.status(200).send(sumarized)
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ message: "some thing went wrong" });
+        res.status(500).json({ message: "No AI Summary" });
     }
 }
 
 module.exports.generateQuiz = async (req, res) => {
     try {
-        const { url} = req.body;
+        const { url, vid} = req.body;
         //console.log(url);
 
+        const videoId = vid;
         let quizData = await Quiz.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!quizData) {
-            const transcript = await fetchTranscriptFromAPI(url);
+            const transcriptData = await fetchTranscript(videoId);
 
-            // let transcript = "";
-            // xx.map(function myfunc(x) {
-            //     transcript += x.text;
-            //     transcript += " ";
-            // });
+            let transcript = "";
+
+            transcriptData.map(function myfunc(x) {
+                transcript += x.text;
+                transcript += " ";
+            });
 
             const prompt = `Generate a 5-quizData MCQ quiz in JSON format and in english or hindi from this transcript: ${transcript}. 
                 Structure: { "quiz": [{ "number": 1, "question": "", "options": {A:"", B:"", C:"", D:""}, "answer": "" }] }`;
@@ -139,6 +115,6 @@ module.exports.generateQuiz = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ message: "some thing went wrong" });
+        res.status(500).json({ message: "No AI Summary" });
     }
 }

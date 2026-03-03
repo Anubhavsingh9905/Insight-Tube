@@ -8,6 +8,12 @@ import TimeStampNotes from "../components/TimestampNotes";
 import Quizes from "../components/Quizes";
 import Summary from "../components/Summary";
 
+function getYoutubeId(url) {
+  if (!url) return null;
+  const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/;
+  const match = url.match(regExp);
+  return match ? match[1] : null;
+}
 
 function VideoPlayer() {
   const [video, setVideo] = useState({});
@@ -19,55 +25,53 @@ function VideoPlayer() {
   const [summary, setSummary] = useState("");
   const [Quiz, setQuiz] = useState("");
   const { Fid, id } = useParams();
-
+  
   const playerRef = useRef(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);
 
   async function getVideo() {
     try {
-
+      
       const res = await api.get(`/video/videoPlayer/${id}`)
-
+      
       //console.log(res.data);
       setVideo(res.data);
     } catch (error) {
       console.error(error);
     }
   }
-
+  
   useEffect(() => {
     getVideo();
   }, [])
-
-  const handlePlay = () => {
-    setPlaying(!playing);
-  }
-
+  
   const handleSummaryClick = async (url) => {
+    const vid = getYoutubeId(url);
     setSumLoad(true);
     try {
       setShowSum(!showSum);
       if (!showSum) {
-        const res = await api.post(`/ai/transcript`, {url});
+        const res = await api.post(`/ai/transcript`, {url, vid});
         setSummary(res.data);
-        //console.log(res.data);
+        console.log(res.data);
         setSumLoad(false);
       }
     } catch (error) {
-      console.error(error);
+      console.log(error.message);
       setSumLoad(false);
       setShowSum(false);
     }
   }
 
   const handleQuizClick = async (url) => {
+    const vid = getYoutubeId(url);
     setQuizLoad(true);
     try {
       setShowQues(!showQues);
       if (!showQues) {
-        const res = await api.post(`/ai/quiz`, { url});
+        const res = await api.post(`/ai/quiz`, { url, vid});
         setQuiz(res.data);
-        //console.log(res.data);
+        console.log(res.data);
         setQuizLoad(false);
       }
       //console.log(res.data);
