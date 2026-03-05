@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const summarySchema = new mongoose.Schema({
+const transcriptSchema = new mongoose.Schema({
     url:{
         type:String,
         required:true
@@ -11,4 +11,4 @@ const summarySchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("Summary", summarySchema);
+module.exports = mongoose.model("Transcript", transcriptSchema);
