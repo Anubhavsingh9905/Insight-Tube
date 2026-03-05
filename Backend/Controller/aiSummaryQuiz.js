@@ -1,7 +1,7 @@
 const Summary = require("../models/summary");
 const Quiz = require('../models/quiz');
 // const { fetchTranscript } = require('youtube-transcript-plus');
-const { YouTubeTranscriptApi, formatters } = require('yt-transcript-api');
+const { YouTubeTranscriptApi, formatters, GenericProxyConfig } = require('yt-transcript-api');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const proxyConfig = new GenericProxyConfig("http://proxy:8080");
