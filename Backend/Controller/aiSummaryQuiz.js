@@ -61,30 +61,30 @@ module.exports.generateSummary = async (req, res) => {
         if (!sumarized) {
 
             let transcriptData = await Transcript.findOne({ url: url });
+            let transcript = "";
             if (!transcriptData) {
                 transcriptData = await fetchTranscriptFromAPI(videoId);
+                
+                if (!transcriptData) {
+                    res.status(403).json({ message: "Transcript error" });
+                    return;
+                }
+                
+                
+                transcriptData.map(function myfunc(x) {
+                    transcript += x.text;
+                    transcript += " ";
+                });
+
                 const newTranscriptData = new Transcript({
                     url: url,
-                    transcript: transcriptData
+                    transcript: transcript
                 });
 
                 await newTranscriptData.save();
             } else {
-                transcriptData = transcriptData.transcript;
+                transcript = transcriptData.transcript;
             }
-
-            if (!transcriptData) {
-                res.status(403).json({ message: "Transcript error" });
-                return;
-            }
-
-            let transcript = "";
-            transcriptData.map(function myfunc(x) {
-                transcript += x.text;
-                transcript += " ";
-            });
-
-            console.log(transcript);
 
             const prompt = `summarize this "${transcript}" in bullet points in 350 words or in smaller words if text size is small`;
             sumarized = await generate(prompt);
@@ -121,28 +121,30 @@ module.exports.generateQuiz = async (req, res) => {
         //console.log(`${sumarized.summary}`);
         if (!quizData) {
             let transcriptData = await Transcript.findOne({ url: url });
+            let transcript = "";
             if (!transcriptData) {
                 transcriptData = await fetchTranscriptFromAPI(videoId);
+                
+                if (!transcriptData) {
+                    res.status(403).json({ message: "Transcript error" });
+                    return;
+                }
+                
+                
+                transcriptData.map(function myfunc(x) {
+                    transcript += x.text;
+                    transcript += " ";
+                });
+
                 const newTranscriptData = new Transcript({
                     url: url,
-                    transcript: transcriptData
+                    transcript: transcript
                 });
 
                 await newTranscriptData.save();
             } else {
-                transcriptData = transcriptData.transcript;
+                transcript = transcriptData.transcript;
             }
-
-            if (!transcriptData || transcriptData.length == 0) {
-                res.status(403).json({ message: "Transcript error" });
-                return;
-            }
-
-            let transcript = "";
-            transcriptData.map(function myfunc(x) {
-                transcript += x.text;
-                transcript += " ";
-            });
 
             const prompt = `Generate a 5-quizData MCQ quiz in JSON format and in english or hindi from this transcript: ${transcript}. 
                 Structure: { "quiz": [{ "number": 1, "question": "", "options": {A:"", B:"", C:"", D:""}, "answer": "" }] }`;
