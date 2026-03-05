@@ -4,10 +4,10 @@ const Quiz = require('../models/quiz');
 const { YouTubeTranscriptApi, formatters, GenericProxyConfig } = require('yt-transcript-api');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const proxyConfig = new GenericProxyConfig("http://proxy:8080");
-const ytt_api = new YouTubeTranscriptApi({ proxy: proxyConfig });
-
 require('dotenv').config();
+
+const proxyConfig = new GenericProxyConfig(process.env.VITE_API_URL);
+const ytt_api = new YouTubeTranscriptApi({ proxy: proxyConfig });
 
 const gemini_api_key = process.env.API_KEY;
 const googleAI = new GoogleGenerativeAI(gemini_api_key);
