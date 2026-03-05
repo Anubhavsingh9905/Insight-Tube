@@ -4,7 +4,8 @@ const Quiz = require('../models/quiz');
 const { YouTubeTranscriptApi, formatters } = require('yt-transcript-api');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const ytt_api = new YouTubeTranscriptApi();
+const proxyConfig = new GenericProxyConfig("http://proxy:8080");
+const ytt_api = new YouTubeTranscriptApi({ proxy: proxyConfig });
 
 require('dotenv').config();
 

@@ -9,7 +9,7 @@ function ProtectedDashboard() {
     const navigate = useNavigate();
 
     if(!isLoggedIn){
-        console.log("nakao");
+        // console.log("nakao");
         navigate("/register");
     }
 
