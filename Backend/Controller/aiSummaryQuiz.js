@@ -1,13 +1,36 @@
 const Summary = require("../models/summary");
-const Quiz = require('../models/quiz');
-// const { fetchTranscript } = require('youtube-transcript-plus');
-const { YouTubeTranscriptApi, formatters, GenericProxyConfig } = require('yt-transcript-api');
+const Quiz = require('../models/quiz')
+const axios = require('axios');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 require('dotenv').config();
 
-const proxyConfig = new GenericProxyConfig(process.env.VITE_API_URL);
-const ytt_api = new YouTubeTranscriptApi({ proxy: proxyConfig });
+
+async function fetchTranscriptFromAPI(vid) {
+    const options = {
+        method: 'GET',
+        url: 'https://youtube-transcripts.p.rapidapi.com/youtube/transcript',
+        params: {
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            videoId: vid,
+            chunkSize: '500',
+            text: 'false',
+        },
+        headers: {
+            'x-rapidapi-key': process.env.RAPID_API_KEY,
+            'x-rapidapi-host': 'youtube-transcripts.p.rapidapi.com'
+        }
+    };
+
+    try {
+        const response = await axios.request(options);
+        return response.data.content;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
 
 const gemini_api_key = process.env.API_KEY;
 const googleAI = new GoogleGenerativeAI(gemini_api_key);
@@ -34,15 +57,19 @@ module.exports.generateSummary = async (req, res) => {
         let sumarized = await Summary.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!sumarized) {
-            const transcriptData = await ytt_api.fetch(videoId, ["en", "hi"]);
+            const transcriptData = await fetchTranscriptFromAPI(videoId);
 
-            if (!transcriptData || transcriptData.length == 0) {
+            if (!transcriptData) {
                 res.status(403).json({ message: "Transcript error" });
                 return;
             }
 
+            let transcript = "";
+            transcriptData.map(function myfunc(x) {
+                transcript += x.text;
+                transcript += " ";
+            });
 
-            const transcript = new formatters.TextFormatter().formatTranscript(transcriptData);
             console.log(transcript);
 
             const prompt = `summarize this "${transcript}" in bullet points in 350 words or in smaller words if text size is small`;
@@ -86,7 +113,11 @@ module.exports.generateQuiz = async (req, res) => {
                 return;
             }
 
-            const transcript = new formatters.TextFormatter().formatTranscript(transcriptData);
+            let transcript = "";
+            transcriptData.map(function myfunc(x) {
+                transcript += x.text;
+                transcript += " ";
+            });
 
             const prompt = `Generate a 5-quizData MCQ quiz in JSON format and in english or hindi from this transcript: ${transcript}. 
                 Structure: { "quiz": [{ "number": 1, "question": "", "options": {A:"", B:"", C:"", D:""}, "answer": "" }] }`;
