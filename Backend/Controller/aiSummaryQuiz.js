@@ -1,7 +1,10 @@
 const Summary = require("../models/summary");
 const Quiz = require('../models/quiz');
-const { fetchTranscript } = require('youtube-transcript-plus');
+// const { fetchTranscript } = require('youtube-transcript-plus');
+const { YouTubeTranscriptApi, formatters } = require('yt-transcript-api');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const ytt_api = new YouTubeTranscriptApi();
 
 require('dotenv').config();
 
@@ -24,26 +27,22 @@ const generate = async (prompt) => {
 
 module.exports.generateSummary = async (req, res) => {
     try {
-        const {url, vid} = req.body;
+        const { url, vid } = req.body;
         //console.log(url);
         const videoId = vid;
         let sumarized = await Summary.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!sumarized) {
-            const transcriptData = await fetchTranscript(videoId);
+            const transcriptData = await ytt_api.fetch(videoId, ["en", "hi"]);
 
-            if(!transcriptData || transcriptData.length == 0){
-                res.status(403).json({message: "Transcript error"});
+            if (!transcriptData || transcriptData.length == 0) {
+                res.status(403).json({ message: "Transcript error" });
                 return;
             }
-            
 
-            let transcript = "";
-            transcriptData.map(function myfunc(x) {
-                transcript += x.text;
-                transcript += " ";
-            });
-            // console.log(transcript);
+
+            const transcript = new formatters.TextFormatter().formatTranscript(transcriptData);
+            console.log(transcript);
 
             const prompt = `summarize this "${transcript}" in bullet points in 350 words or in smaller words if text size is small`;
             sumarized = await generate(prompt);
@@ -72,21 +71,21 @@ module.exports.generateSummary = async (req, res) => {
 
 module.exports.generateQuiz = async (req, res) => {
     try {
-        const { url, vid} = req.body;
+        const { url, vid } = req.body;
         //console.log(url);
 
         const videoId = vid;
         let quizData = await Quiz.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!quizData) {
-            const transcriptData = await fetchTranscript(videoId);
+            const transcriptData = await ytt_api.fetch(videoId, ["en", "hi"]);
 
-            let transcript = "";
+            if (!transcriptData || transcriptData.length == 0) {
+                res.status(403).json({ message: "Transcript error" });
+                return;
+            }
 
-            transcriptData.map(function myfunc(x) {
-                transcript += x.text;
-                transcript += " ";
-            });
+            const transcript = new formatters.TextFormatter().formatTranscript(transcriptData);
 
             const prompt = `Generate a 5-quizData MCQ quiz in JSON format and in english or hindi from this transcript: ${transcript}. 
                 Structure: { "quiz": [{ "number": 1, "question": "", "options": {A:"", B:"", C:"", D:""}, "answer": "" }] }`;
