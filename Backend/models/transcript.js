@@ -5,7 +5,7 @@ const transcriptSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    summary:{
+    transcript:{
         type:String,
         required:true
     }
