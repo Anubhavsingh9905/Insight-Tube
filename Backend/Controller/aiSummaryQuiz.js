@@ -2,6 +2,7 @@ const Summary = require("../models/summary");
 const Quiz = require('../models/quiz')
 const axios = require('axios');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Transcript = require("../models/transcript");
 
 require('dotenv').config();
 
@@ -53,11 +54,22 @@ module.exports.generateSummary = async (req, res) => {
     try {
         const { url, vid } = req.body;
         //console.log(url);
+        
         const videoId = vid;
         let sumarized = await Summary.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!sumarized) {
-            const transcriptData = await fetchTranscriptFromAPI(videoId);
+
+            let transcriptData = Transcript.findOne({url: url});
+            if(!transcriptData){
+                transcriptData = await fetchTranscriptFromAPI(videoId);
+                const newTranscriptData = new Transcript({
+                    url: url,
+                    transcript: transcriptData
+                });
+
+                newTranscriptData.save();
+            }
 
             if (!transcriptData) {
                 res.status(403).json({ message: "Transcript error" });
@@ -106,7 +118,16 @@ module.exports.generateQuiz = async (req, res) => {
         let quizData = await Quiz.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!quizData) {
-            const transcriptData = await ytt_api.fetch(videoId, ["en", "hi"]);
+            let transcriptData = Transcript.findOne({url: url});
+            if(!transcriptData){
+                transcriptData = await fetchTranscriptFromAPI(videoId);
+                const newTranscriptData = new Transcript({
+                    url: url,
+                    transcript: transcriptData
+                });
+
+                newTranscriptData.save();
+            }
 
             if (!transcriptData || transcriptData.length == 0) {
                 res.status(403).json({ message: "Transcript error" });
