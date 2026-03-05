@@ -60,7 +60,7 @@ module.exports.generateSummary = async (req, res) => {
         //console.log(`${sumarized.summary}`);
         if (!sumarized) {
 
-            let transcriptData = Transcript.findOne({ url: url });
+            let transcriptData = await Transcript.findOne({ url: url });
             if (!transcriptData) {
                 transcriptData = await fetchTranscriptFromAPI(videoId);
                 const newTranscriptData = new Transcript({
@@ -68,7 +68,7 @@ module.exports.generateSummary = async (req, res) => {
                     transcript: transcriptData
                 });
 
-                newTranscriptData.save();
+                await newTranscriptData.save();
             } else {
                 transcriptData = transcriptData.transcript;
             }
@@ -98,7 +98,7 @@ module.exports.generateSummary = async (req, res) => {
                 summary: sumarized
             });
 
-            newSummary.save();
+            await newSummary.save();
         }
         else sumarized = sumarized.summary;
 
@@ -120,7 +120,7 @@ module.exports.generateQuiz = async (req, res) => {
         let quizData = await Quiz.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!quizData) {
-            let transcriptData = Transcript.findOne({ url: url });
+            let transcriptData = await Transcript.findOne({ url: url });
             if (!transcriptData) {
                 transcriptData = await fetchTranscriptFromAPI(videoId);
                 const newTranscriptData = new Transcript({
@@ -128,7 +128,7 @@ module.exports.generateQuiz = async (req, res) => {
                     transcript: transcriptData
                 });
 
-                newTranscriptData.save();
+                await newTranscriptData.save();
             } else {
                 transcriptData = transcriptData.transcript;
             }
@@ -154,7 +154,7 @@ module.exports.generateQuiz = async (req, res) => {
                     url: url,
                     quiz: quizData
                 });
-                newQuiz.save();
+                await newQuiz.save();
             } else {
                 res.status(429).json({ message: "Too many request, exceed daily limit" });
                 return;
