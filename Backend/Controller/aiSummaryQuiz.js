@@ -54,14 +54,14 @@ module.exports.generateSummary = async (req, res) => {
     try {
         const { url, vid } = req.body;
         //console.log(url);
-        
+
         const videoId = vid;
         let sumarized = await Summary.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!sumarized) {
 
-            let transcriptData = Transcript.findOne({url: url});
-            if(!transcriptData){
+            let transcriptData = Transcript.findOne({ url: url });
+            if (!transcriptData) {
                 transcriptData = await fetchTranscriptFromAPI(videoId);
                 const newTranscriptData = new Transcript({
                     url: url,
@@ -69,6 +69,8 @@ module.exports.generateSummary = async (req, res) => {
                 });
 
                 newTranscriptData.save();
+            } else {
+                transcriptData = transcriptData.transcript;
             }
 
             if (!transcriptData) {
@@ -118,8 +120,8 @@ module.exports.generateQuiz = async (req, res) => {
         let quizData = await Quiz.findOne({ url: url });
         //console.log(`${sumarized.summary}`);
         if (!quizData) {
-            let transcriptData = Transcript.findOne({url: url});
-            if(!transcriptData){
+            let transcriptData = Transcript.findOne({ url: url });
+            if (!transcriptData) {
                 transcriptData = await fetchTranscriptFromAPI(videoId);
                 const newTranscriptData = new Transcript({
                     url: url,
@@ -127,6 +129,8 @@ module.exports.generateQuiz = async (req, res) => {
                 });
 
                 newTranscriptData.save();
+            } else {
+                transcriptData = transcriptData.transcript;
             }
 
             if (!transcriptData || transcriptData.length == 0) {
