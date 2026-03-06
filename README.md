@@ -30,34 +30,34 @@ https://backend-frl9.onrender.com
 
 # Features
 
-## User Management
+### User Management
 - User registration and login
 - Secure authentication using JWT
 - Session management
 
-## Learning Organization
+### Learning Organization
 - Create subject folders
 - Add and manage YouTube videos
 - Organize learning resources efficiently
 
-## Video Learning Tools
+### Video Learning Tools
 - Embedded YouTube video player
 - Timestamped notes while watching videos
 - Save and manage personal learning notes
 
-## AI Powered Features
+### AI Powered Features
 - Generate video **summaries** using Gemini API
 - Generate **quiz questions** from video content
 - Helps users quickly revise concepts
 
-## Learning Progress
+#### Learning Progress
 - Mark videos as completed
 - Visual **progress bar** for each folder/course
 
-## Search
+### Search
 - Search notes and videos by keywords
 
-## UI / UX
+### UI / UX
 - Clean dashboard interface
 - Responsive design for different screen sizes
 
@@ -65,27 +65,28 @@ https://backend-frl9.onrender.com
 
 # Tech Stack
 
-## Frontend
+### Frontend
 - React (Vite)
 - TailwindCSS / Material UI
 - Axios
 - React Router
 
-## Backend
+### Backend
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
 
-## AI Integration
+### AI Integration
 - Google Gemini API  
   - Video transcript summarization  
   - Quiz generation  
 
-## Other Tools
+### Other Tools
 - Passport Authentication
 - REST API architecture
 - Render for deployment
+- Rapid Api for transcript
 
 ---
 
@@ -119,6 +120,7 @@ Flow example for AI summary generation:
 ---
 
 # Folder Structure
+```
 Insight-Tube
 │
 ├── Frontend
@@ -137,54 +139,66 @@ Insight-Tube
 │ └── app.js
 │
 └── README.md
-
+```
 
 
 ---
 
 # Installation & Setup
 
-Clone the repository
+### 1. Clone the repository
+```
 git clone https://github.com/Anubhavsingh9905/Insight-Tube.git
-
-
-Go into the project directory
-
 cd Insight-Tube
+```
 
 ---
 
-# Backend Setup
+### 2. Backend Setup
 
+```
 cd Backend
 npm install
+```
 
 
 Create a `.env` file
+
+``` .env
 PORT=5000
 MONGO_URL=your_mongodb_connection
 API_KEY=your_gemini_api_key
 SESSION_SECERET=your_session_seceret
 FRONTEND_URL=your_frontend_url
 RAPID_API_KEY=your_rapid_api_key
+```
 
 
 Run backend
+
+```
 npm start
+```
 
 
 ---
 
-# Frontend Setup
+### 3. Frontend Setup
 
+```
 cd Frontend
 npm install
+```
 
 Create a `.env` file
+```
 VITE_API_URL=api_url
+```
 
 Run Frontend
+```
 npm run dev
+```
 
 
 
