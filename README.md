@@ -101,6 +101,7 @@ https://backend-frl9.onrender.com
 
 The application follows a **MERN architecture**.
 
+```
 Frontend (React)
 |
 | REST API Requests
@@ -114,6 +115,7 @@ MongoDB Database
 | AI Processing
 |
 Gemini API
+```
 
 
 Flow example for AI summary generation:
