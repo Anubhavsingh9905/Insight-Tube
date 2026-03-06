@@ -47,7 +47,7 @@ function ProfileLogo() {
             </button>
 
             {menuOpen && (
-                <div ref={modelRef} className="absolute left-1 top-16 bg-white shadow-lg rounded-md w-full py-2">
+                <div ref={modelRef} className="absolute left-1 top-16 bg-white shadow-lg rounded-md w-full py-2 z-200">
                     <ul className="py-1">
                         <li className="flex items-center gap-3 pl-6 pr-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                             <UserRound /> Profile

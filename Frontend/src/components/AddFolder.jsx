@@ -28,13 +28,13 @@ function AddFolder({ onClose, setFolder, folders}) {
     }
 
     return (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-40">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-40 max-md:px-2">
             <div className="mt-10 flex flex-col gap-5 text-black z-50">
-                <button onClick={onClose} className="place-self-end cursor-pointer"><X size={30} /></button>
+                <button onClick={onClose} className="place-self-end cursor-pointer max-md:pr-4"><X size={30} /></button>
 
                 <div className="bg-[#EBEBEB] rounded-xl px-20 py-10 flex flex-col gap-5 items-center mx-4">
-                    <h1 className="text-2xl font-extrabold">ADD THE FOLDER</h1>
-                    <p className="text-3xl font-bold max-w-md text-center">
+                    <h1 className="text-2xl font-extrabold max-md:text-xl">ADD THE FOLDER</h1>
+                    <p className="text-3xl font-bold max-w-md text-center max-md:text-sm">
                         Want to Learn how to Suceess and Erase Your Distraction
                     </p>
 
@@ -47,7 +47,7 @@ function AddFolder({ onClose, setFolder, folders}) {
                             onChange={handleChange}
                             className="w-full px-4 py-3 text-black border-gray-300 rounded-md"
                         />
-                        <button className="mt-4 w-full flex items-center justify-center gap-2 px-5 py-3 font-medium rounded-md bg-black text-white cursor-pointer">
+                        <button className="mt-4 w-full flex items-center justify-center gap-2 px-5 py-3 font-medium rounded-md bg-black text-white cursor-pointer ">
                             Add
                         </button>
                     </form>

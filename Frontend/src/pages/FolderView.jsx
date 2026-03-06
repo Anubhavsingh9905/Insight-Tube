@@ -206,7 +206,7 @@ function FolderView() {
       }
 
       {addVideoMenu &&
-        <div className="absolute right-[8%] top-[20%] bg-white shadow-lg rounded-md w-1/3 p-3 z-20 border">
+        <div className="absolute right-[8%] top-[20%] bg-white shadow-lg rounded-md w-1/3 p-3 z-20 border max-md:top-[9%] max-md:right-[10%]">
           <form onSubmit={handleSubmit}>
             <input
               type="text"

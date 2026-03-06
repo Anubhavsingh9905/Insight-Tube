@@ -113,26 +113,27 @@ function VideoPlayer() {
           </div>
           <div className=" w-full flex justify-around flex-wrap h-80 pl-20 pb-20 pt-5 pr-20 max-md:p-5">
             <div
-              className="cursor-pointer w-[46%] h-full shadow-2xl flex flex-col justify-center items-center rounded-xl active:bg-gray-100 max-md:justify-start max-md:pt-2.5"
+              className="cursor-pointer w-[46%] h-full shadow-2xl flex flex-col justify-center items-center rounded-xl active:bg-gray-100 max-md:justify-start max-md:pt-2.5 max-md:h-[77%]"
               onClick={() => handleSummaryClick(video.url)}>
               <div className="flex flex-col justify-center items-center">
-                <div className="rounded-full bg-gray-200 size-20 flex items-center justify-center mb-2">
-                  <NotebookText size={45} color="green" />
+                <div className="rounded-full bg-gray-200 size-20 flex items-center justify-center mb-2 max-md:size-15">
+                  <NotebookText size={45} color="green" className="max-md:hidden"/>
+                  <NotebookText size={22} color="green" className="md:hidden"/>
                 </div>
-                <div className="mt-2 font-bold text-xl pb-2">Summarize Video</div>
-                <p className="opacity-40 font-medium">Get an AI generated summary of this video</p>
+                <div className="mt-2 font-bold text-xl pb-2 max-md:text-md">Summarize Video</div>
+                <p className="opacity-40 font-medium max-md:text-sm">Get an AI generated summary of this video</p>
               </div>
             </div>
 
             <div
-              className="cursor-pointer w-[46%] h-full shadow-2xl flex flex-col justify-center items-center rounded-xl active:bg-gray-100 max-md:justify-start max-md:pt-2.5"
+              className="cursor-pointer w-[46%] h-full shadow-2xl flex flex-col justify-center items-center rounded-xl active:bg-gray-100 max-md:justify-start max-md:pt-2.5 max-md:h-[77%]"
               onClick={() => handleQuizClick(video.url)}>
               <div className="flex flex-col justify-center items-center">
-                <div className="rounded-full bg-green-200 size-20 flex items-center justify-center mb-2 text-6xl font-bold text-green-600">
+                <div className="rounded-full bg-green-200 size-20 flex items-center justify-center mb-2 text-6xl font-bold text-green-600 max-md:text-2xl max-md:size-15">
                   ?
                 </div>
-                <div className="mt-2 font-bold text-xl pb-2">Generate Quiz</div>
-                <p className="opacity-40 font-medium">Generate Quiz to learn more about topic</p>
+                <div className="mt-2 font-bold text-xl pb-2 max-md:text-md">Generate Quiz</div>
+                <p className="opacity-40 font-medium max-md:text-sm">Generate Quiz to learn more about topic</p>
               </div>
             </div>
           </div>

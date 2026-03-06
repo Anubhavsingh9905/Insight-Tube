@@ -71,7 +71,7 @@ function TimeStampNotes({timestamp, playerRef}) {
     return (
         <div className="w-full h-full items-center ">
             <h1 className="text-lg font-bold mb-2">Notes</h1>
-            <div className="h-[87%] w-full overflow-y-auto text-left max-md:h-[75%]">
+            <div className="h-[87%] w-full overflow-y-auto text-left max-md:h-[73%]">
                 <ul>
                     {list.map((l) => {
                         
