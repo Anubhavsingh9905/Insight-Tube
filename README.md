@@ -20,10 +20,10 @@ https://backend-frl9.onrender.com
 
 # Screenshots
 
-![Home](<img width="1919" height="947" alt="Screenshot 2026-03-06 225556" src="https://github.com/user-attachments/assets/edc694dc-5e10-4f62-8a5f-b7d4f606c7ba" />)  
-![Dashboard](<img width="1919" height="950" alt="Screenshot 2026-03-06 225805" src="https://github.com/user-attachments/assets/b1a2471e-256e-4d8d-84e8-501ff94fe6dc" />)
-![Folder](<img width="1895" height="946" alt="Screenshot 2026-03-06 230036" src="https://github.com/user-attachments/assets/cde57359-164e-4828-a662-5e26d0e97119" />)
-![Video Player](<img width="1891" height="1619" alt="image (2)" src="https://github.com/user-attachments/assets/f1d74a37-eae3-429b-84c7-dc92c2578a04" />)
+#### Home <img width="1919" height="947" alt="Screenshot 2026-03-06 225556" src="https://github.com/user-attachments/assets/edc694dc-5e10-4f62-8a5f-b7d4f606c7ba" />  
+#### Dashboard <img width="1919" height="950" alt="Screenshot 2026-03-06 225805" src="https://github.com/user-attachments/assets/b1a2471e-256e-4d8d-84e8-501ff94fe6dc" />
+#### Folder <img width="1895" height="946" alt="Screenshot 2026-03-06 230036" src="https://github.com/user-attachments/assets/cde57359-164e-4828-a662-5e26d0e97119" />
+#### Video Player <img width="1891" height="1619" alt="image (2)" src="https://github.com/user-attachments/assets/f1d74a37-eae3-429b-84c7-dc92c2578a04" />
 
 
 ---
