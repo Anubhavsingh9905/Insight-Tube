@@ -217,7 +217,7 @@ npm run dev
 
 Some features that can further improve the platform:
 
-- Flashcards generated from videos
+- Chrome Extension: Add video to dashboard from browser
 - AI recommended videos based on learning history
 - Collaborative study groups
 - Better analytics for learning progress
