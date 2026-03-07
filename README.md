@@ -1,7 +1,7 @@
-# Insight-Tube
+# LearningOrganizer
 ### AI Powered Video Learning Platform
 
-Insight-Tube is a **full-stack MERN application** that transforms YouTube videos into structured learning material.  
+LearningOrganizer is a **full-stack MERN application** that transforms YouTube videos into structured learning material.  
 It allows users to organize educational videos into folders, take notes while watching, track learning progress, and generate **AI-powered summaries and quizzes** using the Gemini API.
 
 The goal of this project is to make long YouTube courses easier to study, revise, and practice with less distraction.
@@ -130,7 +130,7 @@ Flow example for AI summary generation:
 
 # Folder Structure
 ```
-Insight-Tube
+LearningOrganizer
 │
 ├── Frontend
 | ├── src
@@ -157,8 +157,8 @@ Insight-Tube
 
 ### 1. Clone the repository
 ```
-git clone https://github.com/Anubhavsingh9905/Insight-Tube.git
-cd Insight-Tube
+git clone https://github.com/Anubhavsingh9905/LearningOrganizer.git
+cd LearningOrganizer
 ```
 
 ---
